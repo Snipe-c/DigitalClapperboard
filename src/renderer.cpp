@@ -2,12 +2,12 @@
 #include <stdlib.h>
 
 /*
-This is the render program. After Arduino convention, have all program a setup and loop function.
-The render function is heavily optimised, so that the amount of flickering is reduced to a minimim.
+This is the render program. After Arduino convention, have all programs a setup and a loop function.
+The render function is heavily optimised, so that the amount of flickering is reduced to a minimum.
 It takes in a char* pointing to a sufficient amount of heap memory, where the colomns are represented as bytes.
 It uses the set point func. because it is generally faster than setting a whole col. at once.
 
-The inv_mat func. prepares the simple readable buffers for the render func.
+The inv_mat func. prepares a simple readable buffer for the render func.
 
 Because of the check_btn func. can the program know if the clapperboard is closed and can display accordingly.
 
@@ -19,8 +19,8 @@ Components used:
 - Arduino UNO (R3)
 - Wires
 - 2x 10 K Ohm resistors
-- 1 nF Capacitor
-- Clapperboard from Amamzon
+- 1x nF Capacitor
+- Clapperboard from Amazon
 - Double sticky tape
 
 */
@@ -54,7 +54,7 @@ void check_btn(){
 
 // JAPAN
 char mat_Text_j [MAX_8X8_MAT][COLUMNS] = {  
-// A byte can be interpreted as beginning the bottom and setting one bit at a time going up.
+// A byte can be interpreted as beginning at the bottom and setting one bit at a time going up.
 // The next byte is the next col. from left to right.
   {0b00110010, 0b00100010, 0b00111110, 0b00000000, 0b00111110, 0b00001010, 0b00111110, 0b00000000},
   {0b00111110, 0b00001010, 0b00001110, 0b00000000, 0b00111110, 0b00001010, 0b00111110, 0b00000000},
@@ -70,7 +70,7 @@ char mat_Text_ph [MAX_8X8_MAT][COLUMNS] = {
   {0b00000000, 0b00111110, 0b00100010, 0b00111110, 0b00000000, 0b00111110, 0b00000000, 0b00000000}
 };
 
-char* mat_Text_j_inv = (char*)malloc(sizeof(char) * ALL_COL); // Setting up memory for the parameter for render()
+char* mat_Text_j_inv = (char*)malloc(sizeof(char) * ALL_COL); // Setting up memory for the argument for render()
 char* mat_Text_ph_inv = (char*)malloc(sizeof(char) * ALL_COL);
 
 void inv_mat(char arr[MAX_8X8_MAT][COLUMNS], char* res){
@@ -94,7 +94,7 @@ void render(char* mat_Text) {
 
 void setup() {
   mx.begin();
-  inv_mat(mat_Text_j, mat_Text_j_inv); // inverting the original buffer and storing result at given adress // has to be on heap to garantee pointer is valid
+  inv_mat(mat_Text_j, mat_Text_j_inv); // inverting the original buffer and storing the result at given adress // has to be on heap to garantee pointer is valid
   inv_mat(mat_Text_ph, mat_Text_ph_inv); 
   pinMode(BTN, INPUT);
 //  mx.control(MD_MAX72XX::INTENSITY, 15); // Normally, the display is set to half brightness. Range from 0x0 to 0xF 
